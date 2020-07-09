@@ -93,12 +93,11 @@ class Network(object):
         if test_data: 
             num_test = len(test_data)
 
-        num_train = len(training_data)
-
         for epoch in range(epochs):
+
             random.shuffle(training_data)
 
-            mini_batches = self.create_mini_batches(num_train, mini_batch_size, training_data)
+            mini_batches = self.create_mini_batches(mini_batch_size, training_data)
 
             for mini_batch in mini_batches:
                 self.update_mini_batch(mini_batch, eta)
@@ -109,7 +108,21 @@ class Network(object):
                 print("Epoch {0} complete".format(epoch))
 
 
-    def create_mini_batches(self, num_train, mini_batch_size, training_data) -> list:
+    def create_mini_batches(self, mini_batch_size, training_data) -> list:
+        """
+        Divides the training data into mini batches of size mini_batch_train 
+
+        Args:
+            num_train: Number of items in training data
+            mini_batch_size: Size of each mini batch
+            training_data: The data the model is being trained on
+
+        Returns:
+            mini_batches: All of the mini batches created from the training data
+
+        """
+
+        num_train = len(training_data)
 
         mini_batches = []
 
@@ -188,7 +201,7 @@ class Network(object):
             delta = np.dot(self.weights[-l+1].transpose(), delta) * sp
             nabla_b[-l] = delta
             nabla_w[-l] = np.dot(delta, activations[-l-1].transpose())
-            
+
         return (nabla_b, nabla_w)
 
     def evaluate(self, test_data):
