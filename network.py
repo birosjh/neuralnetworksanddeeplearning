@@ -17,6 +17,7 @@ import random
 import numpy as np
 
 class Network(object):
+    "Simple Neural Network"
 
     def __init__(self, sizes: list):
         """The list ``sizes`` contains the number of neurons in the
