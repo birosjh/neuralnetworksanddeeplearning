@@ -5,5 +5,5 @@ The code from the book is originally written in Python 2, but my version is writ
 
 I have also refactored several parts of the original code for my own practice and understanding.
 
-Book: http://neuralnetworksanddeeplearning.com/
-Github: https://github.com/mnielsen/neural-networks-and-deep-learning
+- Book: http://neuralnetworksanddeeplearning.com/
+- Github: https://github.com/mnielsen/neural-networks-and-deep-learning
