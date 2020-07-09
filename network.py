@@ -80,7 +80,7 @@ class Network(object):
 
         return activation
 
-    def SGD(self, training_data, epochs: int, mini_batch_size: int, eta: float, test_data=None) -> None:
+    def SGD(self, training_data, epochs: int, mini_batch_size: int, learning_rate: float, test_data=None) -> None:
         """Train the neural network using mini-batch stochastic
         gradient descent.  The ``training_data`` is a list of tuples
         ``(x, y)`` representing the training inputs and the desired
@@ -100,7 +100,7 @@ class Network(object):
             mini_batches = self.create_mini_batches(mini_batch_size, training_data)
 
             for mini_batch in mini_batches:
-                self.update_mini_batch(mini_batch, eta)
+                self.update_mini_batch(mini_batch, learning_rate)
 
             if test_data:
                 print("Epoch {0}: {1} / {2}".format(epoch, self.evaluate(test_data), num_test))
@@ -136,10 +136,10 @@ class Network(object):
 
 
 
-    def update_mini_batch(self, mini_batch: list, eta: float) -> None:
+    def update_mini_batch(self, mini_batch: list, learning_rate: float) -> None:
         """Update the network's weights and biases by applying
         gradient descent using backpropagation to a single mini batch.
-        The ``mini_batch`` is a list of tuples ``(x, y)``, and ``eta``
+        The ``mini_batch`` is a list of tuples ``(x, y)``, and ``learning_rate``
         is the learning rate."""
 
         nabla_b = [np.zeros(b.shape) for b in self.biases]
@@ -154,8 +154,8 @@ class Network(object):
 
             nabla_w = [nw + dnw for nw, dnw in zip(nabla_w, delta_nabla_w)]
 
-        self.weights = [w-(eta/len(mini_batch))*nw for w, nw in zip(self.weights, nabla_w)]
-        self.biases = [b-(eta/len(mini_batch))*nb for b, nb in zip(self.biases, nabla_b)]
+        self.weights = [w-(learning_rate/len(mini_batch))*nw for w, nw in zip(self.weights, nabla_w)]
+        self.biases = [b-(learning_rate/len(mini_batch))*nb for b, nb in zip(self.biases, nabla_b)]
 
     def backprop(self, features: list, labels: list) -> tuple:
         """Return a tuple ``(nabla_b, nabla_w)`` representing the
