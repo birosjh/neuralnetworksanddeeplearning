@@ -18,7 +18,7 @@ import numpy as np
 
 class Network(object):
 
-    def __init__(self, sizes):
+    def __init__(self, sizes: list):
         """The list ``sizes`` contains the number of neurons in the
         respective layers of the network.  For example, if the list
         was [2, 3, 1] then it would be a three-layer network, with the
@@ -80,7 +80,7 @@ class Network(object):
 
         return activation
 
-    def SGD(self, training_data, epochs, mini_batch_size, eta, test_data=None):
+    def SGD(self, training_data, epochs: int, mini_batch_size: int, eta: float, test_data=None) -> None:
         """Train the neural network using mini-batch stochastic
         gradient descent.  The ``training_data`` is a list of tuples
         ``(x, y)`` representing the training inputs and the desired
@@ -108,7 +108,7 @@ class Network(object):
                 print("Epoch {0} complete".format(epoch))
 
 
-    def create_mini_batches(self, mini_batch_size, training_data) -> list:
+    def create_mini_batches(self, mini_batch_size: int, training_data: list) -> list:
         """
         Divides the training data into mini batches of size mini_batch_train 
 
@@ -118,7 +118,6 @@ class Network(object):
 
         Returns:
             mini_batches: All of the mini batches created from the training data
-
         """
 
         num_train = len(training_data)
@@ -137,7 +136,7 @@ class Network(object):
 
 
 
-    def update_mini_batch(self, mini_batch, eta):
+    def update_mini_batch(self, mini_batch: list, eta: float) -> None:
         """Update the network's weights and biases by applying
         gradient descent using backpropagation to a single mini batch.
         The ``mini_batch`` is a list of tuples ``(x, y)``, and ``eta``
@@ -158,7 +157,7 @@ class Network(object):
         self.weights = [w-(eta/len(mini_batch))*nw for w, nw in zip(self.weights, nabla_w)]
         self.biases = [b-(eta/len(mini_batch))*nb for b, nb in zip(self.biases, nabla_b)]
 
-    def backprop(self, x, y):
+    def backprop(self, x: list, y: list) -> tuple:
         """Return a tuple ``(nabla_b, nabla_w)`` representing the
         gradient for the cost function C_x.  ``nabla_b`` and
         ``nabla_w`` are layer-by-layer lists of numpy arrays, similar
@@ -203,7 +202,7 @@ class Network(object):
 
         return (nabla_b, nabla_w)
 
-    def evaluate(self, test_data):
+    def evaluate(self, test_data: list):
         """Return the number of test inputs for which the neural
         network outputs the correct result. Note that the neural
         network's output is assumed to be the index of whichever
