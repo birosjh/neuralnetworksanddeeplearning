@@ -81,7 +81,7 @@ class Network(object):
 
         return activation
 
-    def SGD(self, training_data, epochs: int, mini_batch_size: int, learning_rate: float, test_data=None) -> None:
+    def stochastic_gradient_descent(self, training_data, epochs: int, mini_batch_size: int, learning_rate: float, test_data=None) -> None:
         """Train the neural network using mini-batch stochastic
         gradient descent.  The ``training_data`` is a list of tuples
         ``(features, labels)`` representing the training inputs and the desired
@@ -91,7 +91,7 @@ class Network(object):
         epoch, and partial progress printed out.  This is useful for
         tracking progress, but slows things down substantially."""
 
-        if test_data: 
+        if test_data:
             num_test = len(test_data)
 
         for epoch in range(epochs):
@@ -111,7 +111,7 @@ class Network(object):
 
     def create_mini_batches(self, mini_batch_size: int, training_data: list) -> list:
         """
-        Divides the training data into mini batches of size mini_batch_train 
+        Divides the training data into mini batches of size mini_batch_train
 
         Args:
             mini_batch_size: Size of each mini batch
@@ -126,7 +126,7 @@ class Network(object):
         mini_batches = []
 
         for batch_start in range(0, num_train, mini_batch_size):
-            
+
             batch_end = batch_start + mini_batch_size
 
             batch = training_data[batch_start:batch_end]
@@ -164,8 +164,8 @@ class Network(object):
 
     def backprop(self, features: list, labels: list) -> tuple:
         """
-        Return a tuple ``(nabla_b, nabla_w)`` representing the gradient for the cost function C_x.  
-        ``nabla_b`` and ``nabla_w`` are layer-by-layer lists of numpy arrays, similar to ``self.biases`` 
+        Return a tuple ``(nabla_b, nabla_w)`` representing the gradient for the cost function C_x.
+        ``nabla_b`` and ``nabla_w`` are layer-by-layer lists of numpy arrays, similar to ``self.biases``
         and ``self.weights``.
 
         Args:
@@ -242,7 +242,7 @@ class Network(object):
         return num_correct
 
     def cost_derivative(self, output_activations, y):
-        """Return the vector of partial derivatives partial C_x 
+        """Return the vector of partial derivatives partial C_x
         partial a for the output activations."""
 
         return (output_activations-y)
@@ -250,7 +250,7 @@ class Network(object):
 #### Miscellaneous functions
 def sigmoid(z):
     """The sigmoid function."""
-    
+
     return 1.0 / (1.0 + np.exp(-z))
 
 def sigmoid_prime(z):
