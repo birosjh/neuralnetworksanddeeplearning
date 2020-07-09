@@ -230,13 +230,13 @@ class Network(object):
 
         test_results = []
 
-        for (x, y) in test_data:
+        for (feature, label) in test_data:
 
-            result = (np.argmax(self.feedforward(x)), y)
+            result = (np.argmax(self.feedforward(feature)), label)
 
             test_results.append(result)
 
-        num_correct = sum(int(x == y) for (x, y) in test_results)
+        num_correct = sum(int(pred == actual) for (pred, actual) in test_results)
 
         return num_correct
 
