@@ -83,7 +83,7 @@ class Network(object):
     def SGD(self, training_data, epochs: int, mini_batch_size: int, learning_rate: float, test_data=None) -> None:
         """Train the neural network using mini-batch stochastic
         gradient descent.  The ``training_data`` is a list of tuples
-        ``(x, y)`` representing the training inputs and the desired
+        ``(features, labels)`` representing the training inputs and the desired
         outputs.  The other non-optional parameters are
         self-explanatory.  If ``test_data`` is provided then the
         network will be evaluated against the test data after each
@@ -137,10 +137,14 @@ class Network(object):
 
 
     def update_mini_batch(self, mini_batch: list, learning_rate: float) -> None:
-        """Update the network's weights and biases by applying
-        gradient descent using backpropagation to a single mini batch.
-        The ``mini_batch`` is a list of tuples ``(x, y)``, and ``learning_rate``
-        is the learning rate."""
+        """
+        Update the network's weights and biases by applying gradient descent using backpropagation to a single mini batch.
+        The ``mini_batch`` is a list of tuples ``(x, y)``, and ``learning_rate`` is the learning rate.
+
+        Args:
+            mini_batch: One of the mini batches from the training data, a list of features and labels
+            learning_rate: The learning rate to be used for training
+        """
 
         nabla_b = [np.zeros(b.shape) for b in self.biases]
 
@@ -158,10 +162,18 @@ class Network(object):
         self.biases = [b - (learning_rate / len(mini_batch)) * nb for b, nb in zip(self.biases, nabla_b)]
 
     def backprop(self, features: list, labels: list) -> tuple:
-        """Return a tuple ``(nabla_b, nabla_w)`` representing the
-        gradient for the cost function C_x.  ``nabla_b`` and
-        ``nabla_w`` are layer-by-layer lists of numpy arrays, similar
-        to ``self.biases`` and ``self.weights``."""
+        """
+        Return a tuple ``(nabla_b, nabla_w)`` representing the gradient for the cost function C_x.  
+        ``nabla_b`` and ``nabla_w`` are layer-by-layer lists of numpy arrays, similar to ``self.biases`` 
+        and ``self.weights``.
+
+        Args:
+            features: The input to the network
+            labels: The expected output
+
+        Returns:
+            gradient: The gradient for the cost function C_x
+        """
 
         nabla_b = [np.zeros(b.shape) for b in self.biases]
 
@@ -200,13 +212,21 @@ class Network(object):
             nabla_b[-l] = delta
             nabla_w[-l] = np.dot(delta, activations[-l - 1].transpose())
 
-        return (nabla_b, nabla_w)
+        gradient = (nabla_b, nabla_w)
+
+        return gradient
 
     def evaluate(self, test_data: list):
-        """Return the number of test inputs for which the neural
-        network outputs the correct result. Note that the neural
-        network's output is assumed to be the index of whichever
-        neuron in the final layer has the highest activation."""
+        """
+        Return the number of test inputs for which the neural network outputs the correct result. Note that the neural
+        network's output is assumed to be the index of whichever neuron in the final layer has the highest activation.
+
+        Args:
+            test_data: The data to test the network's accuracy on
+
+        Returns:
+            num_correct: The number of test data that the network predicted correctly on
+        """
 
         test_results = []
 
@@ -216,7 +236,9 @@ class Network(object):
 
             test_results.append(result)
 
-        return sum(int(x == y) for (x, y) in test_results)
+        num_correct = sum(int(x == y) for (x, y) in test_results)
+
+        return num_correct
 
     def cost_derivative(self, output_activations, y):
         """Return the vector of partial derivatives partial C_x 
