@@ -157,7 +157,7 @@ class Network(object):
         self.weights = [w-(eta/len(mini_batch))*nw for w, nw in zip(self.weights, nabla_w)]
         self.biases = [b-(eta/len(mini_batch))*nb for b, nb in zip(self.biases, nabla_b)]
 
-    def backprop(self, x: list, y: list) -> tuple:
+    def backprop(self, features: list, labels: list) -> tuple:
         """Return a tuple ``(nabla_b, nabla_w)`` representing the
         gradient for the cost function C_x.  ``nabla_b`` and
         ``nabla_w`` are layer-by-layer lists of numpy arrays, similar
@@ -168,8 +168,8 @@ class Network(object):
         nabla_w = [np.zeros(w.shape) for w in self.weights]
 
         # feedforward
-        activation = x
-        activations = [x] # list to store all the activations, layer by layer
+        activation = features
+        activations = [features] # list to store all the activations, layer by layer
 
         zs = [] # list to store all the z vectors, layer by layer
 
@@ -180,7 +180,7 @@ class Network(object):
             activations.append(activation)
 
         # backward pass
-        delta = self.cost_derivative(activations[-1], y) * sigmoid_prime(zs[-1])
+        delta = self.cost_derivative(activations[-1], labels) * sigmoid_prime(zs[-1])
 
         nabla_b[-1] = delta
 
