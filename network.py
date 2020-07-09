@@ -113,7 +113,6 @@ class Network(object):
         Divides the training data into mini batches of size mini_batch_train 
 
         Args:
-            num_train: Number of items in training data
             mini_batch_size: Size of each mini batch
             training_data: The data the model is being trained on
 
