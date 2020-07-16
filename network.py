@@ -151,9 +151,9 @@ class Network(object):
 
         nabla_w = [np.zeros(w.shape) for w in self.weights]
 
-        for x, y in mini_batch:
+        for features, label in mini_batch:
 
-            delta_nabla_b, delta_nabla_w = self.backprop(x, y)
+            delta_nabla_b, delta_nabla_w = self.backprop(features, label)
 
             nabla_b = [nb + dnb for nb, dnb in zip(nabla_b, delta_nabla_b)]
 
