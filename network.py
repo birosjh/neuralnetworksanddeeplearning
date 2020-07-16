@@ -72,15 +72,6 @@ class Network(object):
 
         return weights
 
-    def feedforward(self, activation):
-        """Return the output of the network if ``a`` is input."""
-
-        for bias, weight in zip(self.biases, self.weights):
-
-            activation = sigmoid(np.dot(weight, activation) + bias)
-
-        return activation
-
     def stochastic_gradient_descent(self, training_data, epochs: int, mini_batch_size: int, learning_rate: float, test_data=None) -> None:
         """Train the neural network using mini-batch stochastic
         gradient descent.  The ``training_data`` is a list of tuples
@@ -253,6 +244,15 @@ class Network(object):
         gradient = (nabla_b, nabla_w)
 
         return gradient
+
+    def feedforward(self, activation):
+        """Return the output of the network if ``a`` is input."""
+
+        for bias, weight in zip(self.biases, self.weights):
+
+            activation = sigmoid(np.dot(weight, activation) + bias)
+
+        return activation
 
     def evaluate(self, test_data: list):
         """
