@@ -242,7 +242,7 @@ class Network(object):
             sp = sigmoid_prime(weighted_input)
 
             delta = np.dot(self.weights[-layer + 1].transpose(), delta) * sp
-            
+
             nabla_b[-layer] = delta
             nabla_w[-layer] = np.dot(delta, activations[-layer - 1].transpose())
 
@@ -255,9 +255,9 @@ class Network(object):
 
         for bias, weight in zip(self.biases, self.weights):
 
-            z = np.dot(weight, activation) + bias
+            weighted_input = np.dot(weight, activation) + bias
             
-            activation = sigmoid(z)
+            activation = sigmoid(weighted_input)
 
         return activation
 
