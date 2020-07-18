@@ -215,7 +215,7 @@ class Network(object):
         zs = [] # list to store all the z vectors, layer by layer
 
         for bias, weight in zip(self.biases, self.weights):
-            
+
             z = np.dot(weight, activation) + bias
 
             activation = sigmoid(z)
@@ -230,19 +230,19 @@ class Network(object):
 
         nabla_w[-1] = np.dot(delta, activations[-2].transpose())
 
-        # Note that the variable l in the loop below is used a little
+        # Note that the variable layer in the loop below is used a little
         # differently to the notation in Chapter 2 of the book.  Here,
-        # l = 1 means the last layer of neurons, l = 2 is the
+        # layer = 1 means the last layer of neurons, layer = 2 is the
         # second-last layer, and so on.  It's a renumbering of the
         # scheme in the book, used here to take advantage of the fact
         # that Python can use negative indices in lists.
 
-        for l in range(2, self.num_layers):
-            z = zs[-l]
+        for layer in range(2, self.num_layers):
+            z = zs[-layer]
             sp = sigmoid_prime(z)
-            delta = np.dot(self.weights[-l + 1].transpose(), delta) * sp
-            nabla_b[-l] = delta
-            nabla_w[-l] = np.dot(delta, activations[-l - 1].transpose())
+            delta = np.dot(self.weights[-layer + 1].transpose(), delta) * sp
+            nabla_b[-layer] = delta
+            nabla_w[-layer] = np.dot(delta, activations[-layer - 1].transpose())
 
         gradient = (nabla_b, nabla_w)
 
