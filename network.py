@@ -212,19 +212,19 @@ class Network(object):
         activation = features
         activations = [features] # list to store all the activations, layer by layer
 
-        zs = [] # list to store all the z vectors, layer by layer
+        weighted_inputs = [] # list to store all the z vectors, layer by layer
 
         for bias, weight in zip(self.biases, self.weights):
 
-            z = np.dot(weight, activation) + bias
+            weighted_input = np.dot(weight, activation) + bias
 
-            activation = sigmoid(z)
+            activation = sigmoid(weighted_input)
 
-            zs.append(z)
+            weighted_inputs.append(weighted_input)
             activations.append(activation)
 
         # backward pass
-        delta = self.cost_derivative(activations[-1], labels) * sigmoid_prime(zs[-1])
+        delta = self.cost_derivative(activations[-1], labels) * sigmoid_prime(weighted_inputs[-1])
 
         nabla_b[-1] = delta
 
@@ -238,9 +238,11 @@ class Network(object):
         # that Python can use negative indices in lists.
 
         for layer in range(2, self.num_layers):
-            z = zs[-layer]
-            sp = sigmoid_prime(z)
+            weighted_input = weighted_inputs[-layer]
+            sp = sigmoid_prime(weighted_input)
+
             delta = np.dot(self.weights[-layer + 1].transpose(), delta) * sp
+            
             nabla_b[-layer] = delta
             nabla_w[-layer] = np.dot(delta, activations[-layer - 1].transpose())
 
