@@ -214,10 +214,13 @@ class Network(object):
 
         zs = [] # list to store all the z vectors, layer by layer
 
-        for b, w in zip(self.biases, self.weights):
-            z = np.dot(w, activation)+b
-            zs.append(z)
+        for bias, weight in zip(self.biases, self.weights):
+            
+            z = np.dot(weight, activation) + bias
+
             activation = sigmoid(z)
+
+            zs.append(z)
             activations.append(activation)
 
         # backward pass
@@ -250,7 +253,9 @@ class Network(object):
 
         for bias, weight in zip(self.biases, self.weights):
 
-            activation = sigmoid(np.dot(weight, activation) + bias)
+            z = np.dot(weight, activation) + bias
+            
+            activation = sigmoid(z)
 
         return activation
 
