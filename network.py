@@ -63,10 +63,10 @@ class Network(object):
 
         # Loop through a pair of layer n and layer n+1 tuples
         # This represents the weights between the layers
-        for x, y in zip(layer_sizes[:-1], layer_sizes[1:]):
+        for layer, layer_plus_one in zip(layer_sizes[:-1], layer_sizes[1:]):
 
             # Generate a set of weights that is n+1 layer x n layer
-            weight = np.random.randn(y, x)
+            weight = np.random.randn(layer, layer_plus_one)
 
             weights.append(weight)
 
