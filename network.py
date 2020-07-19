@@ -130,11 +130,12 @@ class Network(object):
 
     def update_mini_batch(self, mini_batch: list, learning_rate: float) -> None:
         """
-        Update the network's weights and biases by applying gradient descent using backpropagation to a single mini batch.
-        The ``mini_batch`` is a list of tuples ``(x, y)``, and ``learning_rate`` is the learning rate.
+        Update the network's weights and biases by applying gradient descent using backpropagation
+        to a single mini batch. The ``mini_batch`` is a list of tuples ``(x, y)``, and
+        ``learning_rate`` is the learning rate.
 
         Args:
-            mini_batch: One of the mini batches from the training data, a list of features and labels
+            mini_batch: One of the mini batches from the training data (features and labels)
             learning_rate: The learning rate to be used for training
         """
 
@@ -193,8 +194,8 @@ class Network(object):
     def backprop(self, features: list, labels: list) -> tuple:
         """
         Return a tuple ``(nabla_b, nabla_w)`` representing the gradient for the cost function C_x.
-        ``nabla_b`` and ``nabla_w`` are layer-by-layer lists of numpy arrays, similar to ``self.biases``
-        and ``self.weights``.
+        ``nabla_b`` and ``nabla_w`` are layer-by-layer lists of numpy arrays, similar to
+        ``self.biases`` and ``self.weights``.
 
         Args:
             features: The input to the network
@@ -272,8 +273,9 @@ class Network(object):
 
     def evaluate(self, test_data: list):
         """
-        Return the number of test inputs for which the neural network outputs the correct result. Note that the neural
-        network's output is assumed to be the index of whichever neuron in the final layer has the highest activation.
+        Return the number of test inputs for which the neural network outputs the correct result.
+        Note that the neural network's output is assumed to be the index of whichever neuron in
+        the final layer has the highest activation.
 
         Args:
             test_data: The data to test the network's accuracy on
