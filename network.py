@@ -294,7 +294,7 @@ class Network(object):
 
         return num_correct
 
-    def cost_derivative(self, output_activations, labels):
+    def cost_derivative(self, output_activations: list, labels: list) -> list:
         """Return the vector of partial derivatives partial C_x
         partial a for the output activations."""
 
