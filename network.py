@@ -208,7 +208,10 @@ class Network(object):
 
         nabla_w = [np.zeros(w.shape) for w in self.weights]
 
+        #--------------------------------------------------------
         # feedforward
+        #--------------------------------------------------------
+
         activation = features
         activations = [features] # list to store all the activations, layer by layer
 
@@ -224,7 +227,12 @@ class Network(object):
             weighted_inputs.append(weighted_input)
             activations.append(activation)
 
+
+        #--------------------------------------------------------
         # backward pass
+        #--------------------------------------------------------
+
+        # Error in the output layer
         delta = self.cost_derivative(activations[-1], labels) * sigmoid_prime(weighted_inputs[-1])
 
         nabla_b[-1] = delta
