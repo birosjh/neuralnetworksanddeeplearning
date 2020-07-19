@@ -216,6 +216,7 @@ class Network(object):
 
         for bias, weight in zip(self.biases, self.weights):
 
+            # weighted_input = z
             weighted_input = np.dot(weight, activation) + bias
 
             activation = sigmoid(weighted_input)
