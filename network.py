@@ -137,7 +137,7 @@ class Network(object):
             mini_batch: One of the mini batches from the training data, a list of features and labels
             learning_rate: The learning rate to be used for training
         """
-        
+
         nabla_b = [np.zeros(b.shape) for b in self.biases]
 
         nabla_w = [np.zeros(w.shape) for w in self.weights]
@@ -149,12 +149,12 @@ class Network(object):
             nabla_b = [nb + dnb for nb, dnb in zip(nabla_b, delta_nabla_b)]
 
             nabla_w = [nw + dnw for nw, dnw in zip(nabla_w, delta_nabla_w)]
-        
+
         mini_batch_len = len(mini_batch)
 
         self.update_weights(learning_rate, mini_batch_len, nabla_w)
         self.update_biases(learning_rate, mini_batch_len, nabla_b)
-        
+
 
     def update_weights(self, learning_rate: float, mini_batch_size: int, nabla_w) -> None:
         """
@@ -163,9 +163,9 @@ class Network(object):
         Args:
             learning_rate: The learning rate of the model
             mini_batch_size: Size of each mini batch
-            nabla_w: 
+            nabla_w:
         """
-        
+
         weights = []
         for w, nw in zip(self.weights, nabla_w):
             value = w - (learning_rate / mini_batch_size) * nw
@@ -180,7 +180,7 @@ class Network(object):
         Args:
             learning_rate: The learning rate of the model
             mini_batch_size: Size of each mini batch
-            nabla_w: 
+            nabla_w:
         """
 
         biases = []
@@ -265,7 +265,7 @@ class Network(object):
         for bias, weight in zip(self.biases, self.weights):
 
             weighted_input = np.dot(weight, activation) + bias
-            
+
             activation = sigmoid(weighted_input)
 
         return activation
