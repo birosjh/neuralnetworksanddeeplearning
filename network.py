@@ -66,13 +66,14 @@ class Network(object):
         for layer, layer_plus_one in zip(layer_sizes[:-1], layer_sizes[1:]):
 
             # Generate a set of weights that is n+1 layer x n layer
-            weight = np.random.randn(layer, layer_plus_one)
+            weight = np.random.randn(layer_plus_one, layer)
 
             weights.append(weight)
 
         return weights
 
-    def stochastic_gradient_descent(self, training_data, epochs: int, mini_batch_size: int, learning_rate: float, test_data=None) -> None:
+    def stochastic_gradient_descent(self, training_data, epochs: int, 
+            mini_batch_size: int, learning_rate: float, test_data=None) -> None:
         """Train the neural network using mini-batch stochastic
         gradient descent.  The ``training_data`` is a list of tuples
         ``(features, labels)`` representing the training inputs and the desired
