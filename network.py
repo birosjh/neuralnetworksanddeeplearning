@@ -321,3 +321,16 @@ def sigmoid_prime(z):
     """Derivative of the sigmoid function."""
 
     return sigmoid(z) * (1 - sigmoid(z))
+
+def relu(z):
+    """The Relu function"""
+
+    return np.max(0, z)
+
+def relu_prime(z):
+    """Derivative of the relu function"""
+
+    z[z <= 0] = 0
+    z[z > 0] = 1
+
+    return z
