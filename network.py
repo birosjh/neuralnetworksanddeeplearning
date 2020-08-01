@@ -237,8 +237,10 @@ class Network(object):
         # Error in the output layer
         delta = self.cost_derivative(activations[-1], labels) * sigmoid_prime(weighted_inputs[-1])
 
+        # dC/db of the last layer (rate of change of Cost with respect to bias)
         nabla_b[-1] = delta
 
+        # dC/dW of the last layer (rate of change of Cost with respect to weights)
         nabla_w[-1] = np.dot(delta, activations[-2].transpose())
 
         # Note that the variable layer in the loop below is used a little
@@ -253,11 +255,16 @@ class Network(object):
             weighted_input = weighted_inputs[-layer]
             sp = sigmoid_prime(weighted_input)
 
+            # error in the layer
             delta = np.dot(self.weights[-layer + 1].transpose(), delta) * sp
 
+            # dC/db of the layer
             nabla_b[-layer] = delta
+
+            # dC/dW of the layer
             nabla_w[-layer] = np.dot(delta, activations[-layer - 1].transpose())
 
+        # dC/db and # dC/dW of all layers
         gradient = (nabla_b, nabla_w)
 
         return gradient
