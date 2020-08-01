@@ -247,6 +247,7 @@ class Network(object):
         # scheme in the book, used here to take advantage of the fact
         # that Python can use negative indices in lists.
 
+        # Error in a layer in terms of the error in the next layer
         for layer in range(2, self.num_layers):
             weighted_input = weighted_inputs[-layer]
             sp = sigmoid_prime(weighted_input)
