@@ -19,7 +19,7 @@ import numpy as np
 class Network(object):
     "Simple Neural Network"
 
-    def __init__(self, sizes: list):
+    def __init__(self, sizes: list, activation_equation):
         """The list ``sizes`` contains the number of neurons in the
         respective layers of the network.  For example, if the list
         was [2, 3, 1] then it would be a three-layer network, with the
@@ -35,6 +35,7 @@ class Network(object):
         self.sizes = sizes
         self.biases = self.initialize_biases(sizes)
         self.weights = self.initialize_weights(sizes)
+        self.activation_equation = activation_equation
 
     def initialize_biases(self, layer_sizes: list) -> list:
         """
@@ -224,7 +225,7 @@ class Network(object):
             # weighted_input = z
             weighted_input = np.dot(weight, activation) + bias
 
-            activation = sigmoid(weighted_input)
+            activation = self.activation_equation.activation(weighted_input)
 
             weighted_inputs.append(weighted_input)
             activations.append(activation)
@@ -235,7 +236,7 @@ class Network(object):
         #--------------------------------------------------------
 
         # Error in the output layer
-        delta = self.cost_derivative(activations[-1], labels) * sigmoid_prime(weighted_inputs[-1])
+        delta = self.cost_derivative(activations[-1], labels) * self.activation_equation.derivative(weighted_inputs[-1])
 
         # dC/db of the last layer (rate of change of Cost with respect to bias)
         nabla_b[-1] = delta
@@ -253,7 +254,7 @@ class Network(object):
         # Error in a layer in terms of the error in the next layer
         for layer in range(2, self.num_layers):
             weighted_input = weighted_inputs[-layer]
-            sp = sigmoid_prime(weighted_input)
+            sp = self.activation_equation.derivative(weighted_input)
 
             # error in the layer
             delta = np.dot(self.weights[-layer + 1].transpose(), delta) * sp
@@ -276,7 +277,7 @@ class Network(object):
 
             weighted_input = np.dot(weight, activation) + bias
 
-            activation = sigmoid(weighted_input)
+            activation = self.activation_equation.activation(weighted_input)
 
         return activation
 
@@ -348,7 +349,7 @@ class Relu(ActivationEquationInterface):
     def activation(self, weighted_input):
         """The Relu function"""
 
-        return np.max(0, weighted_input)
+        return weighted_input * (weighted_input > 0)
 
     def derivative(self, weighted_input):
         """Derivative of the relu function"""
