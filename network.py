@@ -311,26 +311,49 @@ class Network(object):
 
         return (output_activations - labels)
 
-#### Miscellaneous functions
-def sigmoid(z):
-    """The sigmoid function."""
+#### Activation functions
+class ActivationEquationInterface(object):
+    """
+    An interface for activation objects
+    """
 
-    return 1.0 / (1.0 + np.exp(-z))
+    def activation(self, weighted_input):
+        """The calculation of the activation function"""
+        pass
 
-def sigmoid_prime(z):
-    """Derivative of the sigmoid function."""
+    def derivative(self, weighted_input):
+        """The calculation of the derivative of the activation function"""
+        pass
 
-    return sigmoid(z) * (1 - sigmoid(z))
+class Sigmoid(ActivationEquationInterface):
+    """
+    The Sigmoid activation object"
+    """
 
-def relu(z):
-    """The Relu function"""
+    def activation(self, weighted_input):
+        """The sigmoid function."""
 
-    return np.max(0, z)
+        return 1.0 / (1.0 + np.exp(-weighted_input))
 
-def relu_prime(z):
-    """Derivative of the relu function"""
+    def derivative(self, weighted_input):
+        """Derivative of the sigmoid function."""
 
-    z[z <= 0] = 0
-    z[z > 0] = 1
+        return self.activation(weighted_input) * (1 - self.activation(weighted_input))
 
-    return z
+class Relu(ActivationEquationInterface):
+    """
+    The Sigmoid activation object"
+    """
+
+    def activation(self, weighted_input):
+        """The Relu function"""
+
+        return np.max(0, weighted_input)
+
+    def derivative(self, weighted_input):
+        """Derivative of the relu function"""
+
+        weighted_input[weighted_input <= 0] = 0
+        weighted_input[weighted_input > 0] = 1
+
+        return weighted_input
